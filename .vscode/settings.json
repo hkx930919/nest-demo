@@ -1,0 +1,6 @@
+{
+    "prettier.prettierPath": ".prettierrc",
+    "prettier.requireConfig": true,
+    "vetur.format.defaultFormatter.ts": "prettier-tslint",
+    "prettier.singleQuote": true
+}
