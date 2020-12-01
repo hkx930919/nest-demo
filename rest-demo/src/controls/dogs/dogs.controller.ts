@@ -1,11 +1,20 @@
-import { Controller, Get, Redirect, Res, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Redirect,
+  Res,
+  HttpStatus,
+  Inject,
+} from '@nestjs/common';
 import { Response } from 'express';
 import { CatsService } from '../cats/cats.service';
 import { setResData } from '../../utils';
 import { LoggerMiddleware } from 'src/middlewares/log.middleware';
 @Controller('dogs')
 export class DogsController {
-  constructor(private readonly catService: CatsService) {}
+  constructor(
+    @Inject('cats-service') private readonly catService: CatsService,
+  ) {}
 
   @Get()
   async findAll() {

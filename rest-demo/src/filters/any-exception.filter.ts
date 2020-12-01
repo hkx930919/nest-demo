@@ -11,7 +11,7 @@ import {
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
-  catch(exception: unknown, host: ArgumentsHost) {
+  catch(exception: any = {}, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse();
     const request = ctx.getRequest();
@@ -19,11 +19,16 @@ export class AllExceptionsFilter implements ExceptionFilter {
       exception instanceof HttpException
         ? exception.getStatus()
         : HttpStatus.INTERNAL_SERVER_ERROR;
+
+    console.log('---exception', exception.message, exception.response);
+
     response.status(status).json({
       statusCode: status,
       timestamp: new Date().toLocaleString(),
       path: request.url,
-      message: exception.toString(),
+      message: exception?.response
+        ? JSON.stringify(exception.response)
+        : String(exception),
     });
   }
 }
